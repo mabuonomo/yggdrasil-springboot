@@ -1,5 +1,6 @@
 package com.mabuonomo.springbootauthupdated;
 
+import com.mabuonomo.springbootauthupdated.bike.BikeService;
 import graphql.ExecutionInput;
 import graphql.ExecutionResult;
 import graphql.GraphQL;
@@ -25,14 +26,19 @@ public class GraphQLController {
     private final GraphQL graphQL;
 
     public GraphQLController(
-            CarService carService
+            CarService carService,
+            BikeService bikeService
     ) {
         GraphQLSchema schema = new GraphQLSchemaGenerator()
                 .withResolverBuilders(
                         // Resolve by annotations
                         new AnnotatedResolverBuilder()
                 )
+
+                // services
                 .withOperationsFromSingleton(carService)
+                .withOperationsFromSingleton(bikeService)
+
                 .withValueMapperFactory(new JacksonValueMapperFactory())
                 .generate();
         graphQL = GraphQL.newGraphQL(schema).build();
