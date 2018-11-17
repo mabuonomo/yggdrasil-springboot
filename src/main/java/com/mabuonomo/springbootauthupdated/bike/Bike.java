@@ -13,16 +13,16 @@ public class Bike {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @GraphQLQuery(name = "id", description = "A car's id")
-    private String id;
+    private int id;
 
     @GraphQLQuery(name = "name", description = "A car's name")
     private String name;
 
-    public String getId() {
+    public int getId() {
         return this.id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
