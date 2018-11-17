@@ -1,0 +1,39 @@
+version: '3.2'
+services:
+  yggdrasil:
+      container_name: yggdrasil_spring
+      build:
+        context: ./
+        dockerfile: DockerFile
+      working_dir: /usr/src/main
+      restart: always
+      volumes: 
+        - ./:/usr/src/main
+      command: sh run.sh
+      image: spring_main
+      ports:
+        - 8080:8080
+      links:
+        - mongodb
+        - mysql
+      depends_on:
+        - mongodb
+        - mysql
+
+  mongodb:
+      container_name: yggdrasil_spring_mongodb
+      image: mongo:latest
+      environment:
+        - MONGO_DATA_DIR=/data/db
+        - MONGO_LOG_DIR=/dev/null
+      ports:
+          - 27017:27017
+      command: mongod --smallfiles --logpath=/dev/null # --quiet
+
+  mysql:
+    image: mysql
+    container_name: yggdrasil_spring_mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
