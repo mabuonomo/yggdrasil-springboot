@@ -1,6 +1,6 @@
 package com.mabuonomo.springbootauthupdated;
 
-import com.mabuonomo.springbootauthupdated.bike.BikeService;
+import com.mabuonomo.springbootauthupdated.bike.BikeResolver;
 import graphql.ExecutionInput;
 import graphql.ExecutionResult;
 import graphql.GraphQL;
@@ -16,45 +16,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.mabuonomo.springbootauthupdated.car.CarService;
+import com.mabuonomo.springbootauthupdated.car.CarResolver;
 
 import java.util.Map;
 
 @RestController
 public class GraphQLController {
 
-    private final GraphQL graphQL;
+        private final GraphQL graphQL;
 
-    public GraphQLController(
-            CarService carService,
-            BikeService bikeService
-    ) {
-        GraphQLSchema schema = new GraphQLSchemaGenerator()
-                .withResolverBuilders(
-                        // Resolve by annotations
-                        new AnnotatedResolverBuilder()
-                )
+        public GraphQLController(CarResolver carResolver, BikeResolver bikeResolver) {
+                GraphQLSchema schema = new GraphQLSchemaGenerator().withResolverBuilders(
+                                // Resolve by annotations
+                                new AnnotatedResolverBuilder())
 
-                // services
-                .withOperationsFromSingleton(carService)
-                .withOperationsFromSingleton(bikeService)
+                                // resolvers
+                                .withOperationsFromSingleton(carResolver).withOperationsFromSingleton(bikeResolver)
 
-                .withValueMapperFactory(new JacksonValueMapperFactory())
-                .generate();
-        graphQL = GraphQL.newGraphQL(schema).build();
-    }
+                                .withValueMapperFactory(new JacksonValueMapperFactory()).generate();
+                graphQL = GraphQL.newGraphQL(schema).build();
+        }
 
-    @PostMapping(
-            value = "/graphql",
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
-    )
-    @ResponseBody
-    public Map<String, Object> graphql(@RequestBody Map<String, String> request, HttpServletRequest raw) {
-        ExecutionResult executionResult = graphQL.execute(ExecutionInput.newExecutionInput()
-                .query(request.get("query"))
-                .operationName(request.get("operationName"))
-                .context(raw).build());
-        return executionResult.toSpecification();
-    }
+        @PostMapping(value = "/graphql", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+        @ResponseBody
+        public Map<String, Object> graphql(@RequestBody Map<String, String> request, HttpServletRequest raw) {
+                ExecutionResult executionResult = graphQL
+                                .execute(ExecutionInput.newExecutionInput().query(request.get("query"))
+                                                .operationName(request.get("operationName")).context(raw).build());
+                return executionResult.toSpecification();
+        }
 }

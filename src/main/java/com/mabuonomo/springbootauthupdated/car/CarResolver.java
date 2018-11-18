@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CarService {
+public class CarResolver {
 
     private final CarRepository carRepository;
 
-    public CarService(CarRepository carRepository) {
+    public CarResolver(CarRepository carRepository) {
         this.carRepository = carRepository;
     }
 

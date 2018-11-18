@@ -3,9 +3,9 @@ package com.mabuonomo.springbootauthupdated;
 import java.util.stream.Stream;
 
 import com.mabuonomo.springbootauthupdated.bike.Bike;
-import com.mabuonomo.springbootauthupdated.bike.BikeService;
+import com.mabuonomo.springbootauthupdated.bike.BikeResolver;
 import com.mabuonomo.springbootauthupdated.car.Car;
-import com.mabuonomo.springbootauthupdated.car.CarService;
+import com.mabuonomo.springbootauthupdated.car.CarResolver;
 
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -26,18 +26,18 @@ public class SpringbootAuthUpdatedApplication {
     }
 
     @Bean
-    ApplicationRunner init(CarService carService, BikeService bikeService) {
+    ApplicationRunner init(CarResolver carResolver, BikeResolver bikeResolver) {
         return args -> {
             Stream.of("Ferrari", "Jaguar", "Porsche", "Lamborghini", "Bugatti", "AMC Gremlin", "Triumph Stag",
                     "Ford Pinto", "Yugo GV").forEach(name -> {
-                Car car = new Car();
-                car.setName(name);
-                carService.saveCar(car);
+                        Car car = new Car();
+                        car.setName(name);
+                        carResolver.saveCar(car);
 
-                Bike bike = new Bike();
-                bike.setName(name);
-                bikeService.saveBike(bike);
-            });
+                        Bike bike = new Bike();
+                        bike.setName(name);
+                        bikeResolver.saveBike(bike);
+                    });
         };
     }
 }
