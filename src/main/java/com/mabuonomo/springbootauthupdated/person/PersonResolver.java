@@ -7,14 +7,12 @@ import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLQuery;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PersonResolver {
 
     private final PersonRepository repository;
 
-    // @Autowired
     public PersonResolver(PersonRepository repository) {
         this.repository = repository;
     }
