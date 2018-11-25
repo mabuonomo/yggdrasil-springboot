@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 import com.mabuonomo.springbootauthupdated.car.CarResolver;
+import com.mabuonomo.springbootauthupdated.person.PersonResolver;
 
 import java.util.Map;
 
@@ -25,13 +26,15 @@ public class GraphQLController {
 
         private final GraphQL graphQL;
 
-        public GraphQLController(CarResolver carResolver, BikeResolver bikeResolver) {
+        public GraphQLController(CarResolver carResolver, BikeResolver bikeResolver, PersonResolver personResolver) {
                 GraphQLSchema schema = new GraphQLSchemaGenerator().withResolverBuilders(
                                 // Resolve by annotations
                                 new AnnotatedResolverBuilder())
 
                                 // resolvers
-                                .withOperationsFromSingleton(carResolver).withOperationsFromSingleton(bikeResolver)
+                                .withOperationsFromSingleton(carResolver)
+                                .withOperationsFromSingleton(bikeResolver)
+                                .withOperationsFromSingleton(personResolver)
 
                                 .withValueMapperFactory(new JacksonValueMapperFactory()).generate();
                 graphQL = GraphQL.newGraphQL(schema).build();
@@ -41,8 +44,11 @@ public class GraphQLController {
         @ResponseBody
         public Map<String, Object> graphql(@RequestBody Map<String, String> request, HttpServletRequest raw) {
                 ExecutionResult executionResult = graphQL
-                                .execute(ExecutionInput.newExecutionInput().query(request.get("query"))
-                                                .operationName(request.get("operationName")).context(raw).build());
+                                .execute(ExecutionInput.newExecutionInput()
+                                .query(request.get("query"))
+                                .operationName(request.get("operationName"))
+                                .context(raw)
+                                .build());
                 return executionResult.toSpecification();
         }
 }

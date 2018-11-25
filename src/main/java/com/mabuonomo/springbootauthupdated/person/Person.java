@@ -12,6 +12,12 @@ public class Person {
     @GraphQLQuery(name = "name", description = "A car's name")
     private String name;
 
+    @GraphQLQuery(name = "firstname", description = "A car's name")
+    private String firstname;
+
+    @GraphQLQuery(name = "lastname", description = "A car's name")
+    private String lastname;
+
     public String getId() {
         return this.id;
     }
@@ -26,6 +32,22 @@ public class Person {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = firstname;
+    }
+
+    public String getLastname() {
+        return this.lastname;
+    }
+
+    public String getFirstName() {
+        return this.firstname;
     }
 
 }

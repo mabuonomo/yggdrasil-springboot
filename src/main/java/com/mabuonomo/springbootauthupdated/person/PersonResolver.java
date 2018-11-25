@@ -1,4 +1,4 @@
-package com.mabuonomo.springbootauthupdated.car;
+package com.mabuonomo.springbootauthupdated.person;
 
 import org.springframework.stereotype.Service;
 
@@ -10,31 +10,33 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CarResolver {
+public class PersonResolver {
 
-    private final CarRepository carRepository;
+    private final PersonRepository repository;
 
-    public CarResolver(CarRepository carRepository) {
-        this.carRepository = carRepository;
+    // @Autowired
+    public PersonResolver(PersonRepository repository) {
+        this.repository = repository;
     }
 
-    @GraphQLQuery(name = "cars")
-    public List<Car> getCars() {
-        return carRepository.findAll();
+    @GraphQLMutation(name = "savePerson")
+    public Person save(@GraphQLArgument(name = "bike") Person person) {
+        return repository.save(person);
     }
 
-    @GraphQLQuery(name = "car")
-    public Optional<Car> getCarById(@GraphQLArgument(name = "id") Long id) {
-        return carRepository.findById(id);
-    }
+    @GraphQLQuery(name = "persons")
+    public List<Person> doWork() {
 
-    @GraphQLMutation(name = "saveCar")
-    public Car saveCar(@GraphQLArgument(name = "car") Car car) {
-        return carRepository.save(car);
-    }
+        repository.deleteAll();
 
-    @GraphQLMutation(name = "deleteCar")
-    public void deleteCar(@GraphQLArgument(name = "id") Long id) {
-        carRepository.deleteById(id);
+        Person person = new Person();
+        person.setFirstname("Oliver");
+        person.setLastname("Gierke");
+        person = repository.save(person);
+
+        List<Person> lastNameResults = repository.findByLastname("Gierke");
+        List<Person> firstNameResults = repository.findByFirstnameLike("Oli*");
+
+        return lastNameResults;
     }
 }

@@ -6,6 +6,8 @@ import com.mabuonomo.springbootauthupdated.bike.Bike;
 import com.mabuonomo.springbootauthupdated.bike.BikeResolver;
 import com.mabuonomo.springbootauthupdated.car.Car;
 import com.mabuonomo.springbootauthupdated.car.CarResolver;
+import com.mabuonomo.springbootauthupdated.person.Person;
+import com.mabuonomo.springbootauthupdated.person.PersonResolver;
 
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -26,7 +28,7 @@ public class SpringbootAuthUpdatedApplication {
     }
 
     @Bean
-    ApplicationRunner init(CarResolver carResolver, BikeResolver bikeResolver) {
+    ApplicationRunner init(CarResolver carResolver, BikeResolver bikeResolver, PersonResolver personResolver) {
         return args -> {
             Stream.of("Ferrari", "Jaguar", "Porsche", "Lamborghini", "Bugatti", "AMC Gremlin", "Triumph Stag",
                     "Ford Pinto", "Yugo GV").forEach(name -> {
@@ -37,6 +39,10 @@ public class SpringbootAuthUpdatedApplication {
                         Bike bike = new Bike();
                         bike.setName(name);
                         bikeResolver.saveBike(bike);
+
+                        Person person = new Person();
+                        person.setName(name);
+                        personResolver.save(person);
                     });
         };
     }
