@@ -16,9 +16,11 @@ services:
       links:
         - mongodb
         - mysql
+        - cassandra
       depends_on:
         - mongodb
         - mysql
+        - cassandra
 
   mongodb:
       container_name: yggdrasil_spring_mongodb
@@ -37,3 +39,15 @@ services:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: "root"
+
+  cassandra:
+    container_name: yggdrasil_cassandra
+    image: cassandra:latest
+    ports:
+      - "9042:9042"
+    environment:
+      - "MAX_HEAP_SIZE=256M"
+      - "HEAP_NEWSIZE=128M"
+    restart: always
+    volumes:
+      - ./data:/var/lib/cassandra

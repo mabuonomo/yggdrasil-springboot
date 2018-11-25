@@ -26,3 +26,6 @@ data/
 /dist/
 /nbdist/
 /.nb-gradle/
+
+cassandra_data/
+data/

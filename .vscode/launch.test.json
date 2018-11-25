@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "springboot-auth-updated",
+                "projectName": "springboot-auth-updated",
+                "workingDirectory": "/home/mabuonomo/projects/yggdrasil-springboot",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "springboot-auth-updated",
+                "projectName": "springboot-auth-updated",
+                "workingDirectory": "/home/mabuonomo/projects/yggdrasil-springboot",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}

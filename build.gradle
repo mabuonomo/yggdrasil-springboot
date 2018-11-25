@@ -34,6 +34,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile("org.hsqldb:hsqldb")
 	compile "org.springframework.data:spring-data-mongodb:2.1.2.RELEASE"
+	compile group: 'org.springframework.data', name: 'spring-data-cassandra', version: '2.1.2.RELEASE'
 
 	// Use MySQL Connector-J
 	compile 'mysql:mysql-connector-java'
