@@ -33,7 +33,7 @@ public class PersonResolver {
         person = repository.save(person);
 
         List<Person> lastNameResults = repository.findByLastname("Gierke");
-        List<Person> firstNameResults = repository.findByFirstnameLike("Oli*");
+        // List<Person> firstNameResults = repository.findByFirstnameLike("Oli*");
 
         return lastNameResults;
     }

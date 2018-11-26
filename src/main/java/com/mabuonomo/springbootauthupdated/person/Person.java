@@ -1,13 +1,16 @@
 package com.mabuonomo.springbootauthupdated.person;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.cassandra.core.mapping.Table;
+
 import io.leangen.graphql.annotations.GraphQLQuery;
 
+@Table
 public class Person {
 
     @Id
     @GraphQLQuery(name = "id", description = "A car's id")
-    private String id;
+    private int id;
 
     @GraphQLQuery(name = "name", description = "A car's name")
     private String name;
@@ -18,11 +21,11 @@ public class Person {
     @GraphQLQuery(name = "lastname", description = "A car's name")
     private String lastname;
 
-    public String getId() {
+    public int getId() {
         return this.id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
